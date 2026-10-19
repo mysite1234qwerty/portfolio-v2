@@ -1,0 +1,1116 @@
+/* ===== FONTS ===== */
+@font-face {
+    font-family: 'Clash Grotesk';
+    src: url('../Fonts/Clash Grotesk/ClashGrotesk-Variable.ttf') format('truetype');
+    font-weight: 200 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Brockmann';
+    src: url('../Fonts/Brockmann/brockmann-regular-webfont.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Brockmann';
+    src: url('../Fonts/Brockmann/brockmann-medium-webfont.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Brockmann';
+    src: url('../Fonts/Brockmann/brockmann-semibold-webfont.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Brockmann';
+    src: url('../Fonts/Brockmann/brockmann-bold-webfont.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ===== TOKENS (from Figma PF26) ===== */
+:root {
+    --bg: #F2F2F2;
+    --ink: #282B32;
+    --ink-muted: #82849A;
+    --ink-faint: #D7D8E4;
+    --accent: #EC4F10;
+
+    --font-display: 'Clash Grotesk', 'Helvetica Neue', Arial, sans-serif;
+    --font-body: 'Brockmann', system-ui, -apple-system, sans-serif;
+
+    --gutter: 40px;          /* page edge */
+    --header-h: 144px;       /* carousel starts here */
+    --switch-bottom: 40px;   /* segmented control distance from bottom */
+}
+
+/* ===== BASE ===== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;   /* stop iOS Safari enlarging text on its own */
+    text-size-adjust: 100%;
+}
+
+html,
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+p {
+    margin: 0;
+}
+
+/* Balanced line breaks (no orphans) for all copy */
+p,
+h1,
+h2,
+h3,
+dt,
+dd,
+li,
+figcaption {
+    text-wrap: pretty;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+::selection {
+    background: var(--accent);
+    color: #FFFFFF;
+}
+
+/* ===== HOME LAYOUT ===== */
+body.home {
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+}
+
+.site-header {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+    padding: var(--gutter) var(--gutter) 0;
+    pointer-events: none; /* let drags pass through to the carousel... */
+}
+
+.site-header a,
+.site-header p {
+    pointer-events: auto; /* ...but keep text and links interactive */
+}
+
+/* Logomark */
+.logomark {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.logomark img {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+.logomark-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 2rem;          /* 32px */
+    line-height: 1;
+    color: var(--ink);
+    white-space: nowrap;
+    text-box: trim-both cap alphabetic;
+}
+
+/* Intro copy */
+.intro {
+    display: flex;
+    gap: 80px;
+    align-items: flex-start;
+}
+
+.who-i-am,
+.what-i-do {
+    font-weight: 500;
+    font-size: 1rem;          /* 16px */
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+}
+
+/* Balanced wrapping at every breakpoint (no media query overrides it). "pretty" alone can
+   still leave a lone link on the last line (the letter-roll links are atomic boxes, which
+   also ignore &nbsp;), so short phrases are kept together: "Alumni of CIID." and
+   "Currently at Scapia." in .nowrap spans, "interruption&nbsp;of&nbsp;it." with &nbsp; */
+.home .who-i-am,
+.home .what-i-do > p,
+.home .links {
+    text-wrap: pretty;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.who-i-am {
+    width: 372px;
+}
+
+.what-i-do {
+    width: 390px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.accent {
+    color: var(--accent);
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    white-space: nowrap;
+}
+
+.links a {
+    color: var(--ink-muted);
+}
+
+.links .dot {
+    color: var(--ink-faint);
+}
+
+/* ===== LETTER ROLL (hover) =====
+   Ported from portfolio '25: each letter is doubled and both copies slide up one line,
+   staggered 20ms per letter, 400ms, cubic-bezier(0.34, 1.56, 0.64, 1). */
+.roll-word {
+    display: inline-flex;
+    white-space: pre;
+    vertical-align: bottom;
+}
+
+.roll-letter {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.roll-a,
+.roll-b {
+    display: inline-block;
+    transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition-delay: calc(var(--i) * 20ms);
+    will-change: transform;
+}
+
+.roll-b {
+    position: absolute;
+    left: 0;
+    top: 100%;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .roll:hover .roll-a,
+    .roll:hover .roll-b,
+    .roll:focus-visible .roll-a,
+    .roll:focus-visible .roll-b {
+        transform: translateY(-100%);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .roll-a,
+    .roll-b {
+        transition: none;
+    }
+}
+
+.email-link.is-copied {
+    color: var(--ink);
+}
+
+/* ===== CAROUSEL STAGE ===== */
+.stage {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+/* Where the cards sit (matches the IMAGE-FOR-REFERENCE slot in Figma). Invisible: js/home.js
+   measures it and centres/sizes the cards inside it. */
+.carousel-frame {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--header-h);
+    bottom: 34px;           /* 982 - (144 + 804) in the Figma frame */
+    pointer-events: none;
+    visibility: hidden;
+}
+
+/* The WebGL canvas covers the whole window so the Stretch flares are never clipped.
+   position is also set inline in index.html: the component forces position:relative
+   and a 640px fallback height unless it is. */
+#work-carousel {
+    position: absolute;
+    inset: 0;
+    height: auto;
+    cursor: default;         /* grab / pointer are set per zone by js/home.js */
+    outline: none;
+}
+
+.effect-switch {
+    position: absolute;
+    left: 50%;
+    bottom: var(--switch-bottom);
+    transform: translateX(-50%);
+    z-index: 3;
+    border-radius: 1000px;
+}
+
+
+/* ===== INTRO (home) =====
+   Each piece fades in from a blur, staggered: wordmark → descriptions → carousel → tabs.
+   Text starts on load; the carousel and tabs wait until the carousel has drawn its first
+   frame (body.is-ready, set in js/home.js) so they never appear before there's anything to show. */
+@keyframes fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes blur-in {
+    from { opacity: 0; filter: blur(12px); transform: translateY(12px); }
+    to   { opacity: 1; filter: blur(0);    transform: none; }
+}
+
+.home .logomark,
+.home .who-i-am,
+.home .what-i-do > p,
+.home .links,
+.home #work-carousel,
+.home #effect-control {
+    opacity: 0;
+}
+
+.home .logomark,
+.home .who-i-am,
+.home .what-i-do > p,
+.home .links {
+    animation: blur-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--intro-delay, 0s) forwards;
+}
+
+.home .logomark      { --intro-delay: 0.10s; }
+.home .who-i-am      { --intro-delay: 0.25s; }
+.home .what-i-do > p { --intro-delay: 0.38s; }
+.home .links         { --intro-delay: 0.50s; }
+
+/* Opacity-only fade (a blur filter on the full-window WebGL canvas would cost frames);
+   the carousel's own fly-in (js/home.js) is the main event */
+.home.is-ready #work-carousel {
+    animation: carousel-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--carousel-delay, 0s) forwards;
+}
+
+@keyframes carousel-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Tabs arrive together with the carousel */
+.home.is-ready #effect-control {
+    display: inline-block;
+    animation: blur-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--carousel-delay, 0s) forwards;
+}
+
+/* Back from a project: no intro — everything is simply there (the carousel, which has to
+   boot, gets a quick fade so it doesn't pop) */
+.returning .home .logomark,
+.returning .home .who-i-am,
+.returning .home .what-i-do > p,
+.returning .home .links,
+.returning .home #effect-control {
+    opacity: 1;
+    animation: none;
+}
+
+.returning .home.is-ready #work-carousel {
+    animation: carousel-in 0.3s ease-out 0s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home .logomark,
+    .home .who-i-am,
+    .home .what-i-do > p,
+    .home .links,
+    .home.is-ready #work-carousel,
+    .home.is-ready #effect-control {
+        animation-name: fade-in;
+        animation-duration: 0.4s;
+    }
+
+    @keyframes fade-in {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1280px) {
+    .intro {
+        gap: 40px;
+    }
+
+    .who-i-am {
+        width: 300px;
+    }
+
+    .what-i-do {
+        width: 340px;
+    }
+}
+
+@media (max-width: 1024px) {
+    :root {
+        --header-h: 220px;
+    }
+
+    .site-header {
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .intro {
+        width: 100%;
+        max-width: 760px;
+    }
+
+    .who-i-am,
+    .what-i-do {
+        flex: 1;
+        width: auto;
+    }
+}
+
+@media (max-width: 640px) {
+    :root {
+        --gutter: 24px;
+        --header-h: 330px;
+        --switch-bottom: 24px;
+    }
+
+    .logomark-name {
+        font-size: 1.5rem;    /* 24px */
+    }
+
+    .who-i-am,
+    .what-i-do {
+        font-size: 0.875rem;  /* 14px on phones */
+    }
+
+    .site-header {
+        gap: 24px;
+    }
+
+    .intro {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .carousel-frame {
+        bottom: 72px;
+    }
+
+    .effect-switch {
+        transform: translateX(-50%) scale(0.84);
+        transform-origin: 50% 100%;
+    }
+}
+
+/* ===== SOUND TOGGLE (js/sound.js) =====
+   Figma PF26 "Desktop-Unmute / Desktop-Mute": 118×45 white pill, 0.5px border, soft shadow,
+   speaker icon + Medium 14 label, bottom-left — level with the effect tabs on home.
+   "Mobile-…": 45×45 circle, icon only, top-right. */
+.sound-toggle {
+    position: fixed;
+    left: 44px;
+    bottom: var(--switch-bottom, 40px);
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 118px;
+    height: 45px;
+    padding: 0 20px 0 16px;
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
+    border-radius: 1000px;
+    background: #FFFFFF;
+    box-shadow: 0 4px 20px rgba(26, 27, 33, 0.08);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.875rem;          /* 14px */
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    animation: blur-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease;
+}
+
+.sound-toggle:hover { background: #FAFAFA; }
+.sound-toggle:active { transform: scale(0.97); }
+.sound-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.sound-icon {
+    flex: none;
+    display: block;
+    overflow: visible;
+}
+
+/* the label's width eases between "Unmute" and "Mute", so the icon glides */
+.sound-label {
+    position: relative;
+    display: inline-block;
+    height: 1.4em;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: width 0.45s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+
+.sl-word {
+    display: inline-flex;
+    white-space: pre;
+}
+
+.sl-word.is-out {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.sl-letter {
+    display: inline-block;
+    transition:
+        transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1) calc(var(--i) * 20ms),
+        opacity 300ms ease calc(var(--i) * 20ms),
+        filter 300ms ease calc(var(--i) * 20ms);
+}
+
+.sl-word.is-in .sl-letter { transform: translateY(100%); opacity: 0; filter: blur(2px); transition: none; }
+.sl-word.is-out .sl-letter { transform: translateY(-100%); opacity: 0; filter: blur(2px); }
+
+.sound-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* home: appears with the tabs (intro), or straight away when coming back from a project */
+.home .sound-toggle { opacity: 0; animation: none; }
+.home.is-ready .sound-toggle {
+    animation: blur-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--carousel-delay, 0s) forwards;
+}
+.returning .home .sound-toggle { opacity: 1; animation: none; }
+
+/* other pages: level with the scroll-to-top button */
+body:not(.home) .sound-toggle { bottom: 41.5px; }
+
+@media (prefers-reduced-motion: reduce) {
+    .sound-toggle { animation-name: fade-in; animation-duration: 0.3s; }
+    .sl-letter, .sound-label { transition: none; }
+}
+
+/* phones / small tablets: the 45×45 icon-only button, top-right — on home centred on the
+   wordmark row (the tab bar fills the bottom), elsewhere on the back arrow, scrolling with the page */
+:root { --logo-row: 32px; }
+
+@media (max-width: 760px) {
+    .sound-toggle {
+        left: auto;
+        right: var(--gutter);
+        bottom: auto;
+        top: calc(var(--gutter) + var(--logo-row) / 2 - 22.5px);
+        width: 45px;
+        padding: 0;
+    }
+    .sound-label { display: none; }
+
+    body:not(.home) .sound-toggle {
+        position: absolute;
+        bottom: auto;
+        top: calc(72px + 20px - 22.5px);
+    }
+}
+
+@media (max-width: 640px) {
+    :root { --logo-row: 24px; }
+}
+
+/* ===== CASE STUDY DRAWER ===== */
+.drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: rgba(15, 17, 21, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.drawer-backdrop.is-open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.project-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 680px;
+    z-index: 51;
+    background: #FFFFFF;
+    color: var(--ink);
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.15);
+    overflow-y: auto;
+    padding: 40px;
+    transform: translateX(100%);
+    transition: transform 0.45s cubic-bezier(0.34, 1.15, 0.64, 1);
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.project-drawer.is-open {
+    transform: translateX(0);
+}
+
+.drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--ink-faint);
+    padding-bottom: 20px;
+}
+
+.drawer-tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+}
+
+.drawer-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--ink-muted);
+    transition: color 0.2s;
+    line-height: 1;
+}
+
+.drawer-close:hover {
+    color: var(--ink);
+}
+
+.drawer-title {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+.drawer-subtitle {
+    font-size: 1.125rem;
+    color: var(--ink-muted);
+    margin: 8px 0 0;
+    line-height: 1.4;
+}
+
+.drawer-meta {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--ink-muted);
+}
+
+.drawer-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    background: var(--bg);
+    padding: 20px;
+    border-radius: 16px;
+}
+
+.metric-box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.m-val {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.m-lbl {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-muted);
+}
+
+.drawer-section h3 {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+    margin-bottom: 8px;
+}
+
+.drawer-section p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--ink);
+}
+
+.drawer-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.step-box {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 12px;
+    background: var(--bg);
+}
+
+.s-idx {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.s-cnt strong {
+    display: block;
+    font-size: 0.9375rem;
+    margin-bottom: 4px;
+}
+
+.s-cnt p {
+    font-size: 0.875rem;
+    color: var(--ink-muted);
+    margin: 0;
+}
+
+.drawer-behance-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 28px;
+    border-radius: 100px;
+    background: var(--ink);
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: background 0.2s, transform 0.2s;
+    width: fit-content;
+}
+
+.drawer-behance-btn:hover {
+    background: #000000;
+    transform: translateY(-1px);
+}
+
+/* ===== AI DESIGN CHATBOT ===== */
+.ai-chat-toggle {
+    position: fixed;
+    left: 174px;
+    bottom: var(--switch-bottom, 40px);
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 45px;
+    padding: 0 18px 0 14px;
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
+    border-radius: 1000px;
+    background: #FFFFFF;
+    box-shadow: 0 4px 20px rgba(26, 27, 33, 0.08);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.875rem;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease, border-color 0.2s;
+}
+
+.ai-chat-toggle:hover {
+    background: #FAFAFA;
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+.ai-chat-toggle:active,
+.ai-chat-toggle.is-active {
+    transform: scale(0.97);
+    background: var(--ink);
+    color: #FFFFFF;
+}
+
+.ai-sparkle-icon {
+    flex: none;
+    color: var(--accent);
+}
+
+.ai-chat-toggle.is-active .ai-sparkle-icon {
+    color: #FFFFFF;
+}
+
+.ai-chat-popover {
+    position: fixed;
+    left: 44px;
+    bottom: 96px;
+    width: 360px;
+    max-height: 520px;
+    z-index: 55;
+    border-radius: 20px;
+    background: #FFFFFF;
+    box-shadow: 0 16px 48px rgba(26, 27, 33, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(16px) scale(0.96);
+    transform-origin: bottom left;
+    transition: opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1), transform 0.25s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+
+.ai-chat-popover.is-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+}
+
+.ai-chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--ink-faint);
+    background: #FFFFFF;
+}
+
+.ai-header-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ai-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10B981;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+}
+
+.ai-header-info strong {
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: block;
+    line-height: 1.2;
+}
+
+.ai-header-sub {
+    font-size: 0.6875rem;
+    color: var(--ink-muted);
+}
+
+.ai-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.ai-icon-btn {
+    background: none;
+    border: none;
+    font-size: 1.125rem;
+    color: var(--ink-muted);
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.ai-icon-btn:hover {
+    background: var(--bg);
+    color: var(--ink);
+}
+
+.ai-settings-panel {
+    background: var(--bg);
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--ink-faint);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ai-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+}
+
+.ai-key-input,
+.ai-select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
+    font-size: 0.75rem;
+    background: #FFFFFF;
+    color: var(--ink);
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.ai-settings-row {
+    display: flex;
+    gap: 8px;
+}
+
+.ai-save-btn {
+    padding: 6px 14px;
+    background: var(--ink);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.ai-subtext {
+    font-size: 0.625rem;
+    color: var(--ink-muted);
+    margin: 0;
+}
+
+.ai-chat-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 320px;
+    background: #FAFAFA;
+}
+
+.ai-chips-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+}
+
+.ai-chip {
+    padding: 4px 10px;
+    border-radius: 100px;
+    border: 1px solid var(--ink-faint);
+    background: #FFFFFF;
+    font-size: 0.6875rem;
+    font-family: inherit;
+    color: var(--ink);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.ai-chip:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.ai-messages-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ai-msg {
+    display: flex;
+    width: 100%;
+}
+
+.ai-msg-user {
+    justify-content: flex-end;
+}
+
+.ai-msg-assistant {
+    justify-content: flex-start;
+}
+
+.ai-msg-bubble {
+    max-width: 86%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+.ai-msg-user .ai-msg-bubble {
+    background: var(--ink);
+    color: #FFFFFF;
+    border-bottom-right-radius: 4px;
+}
+
+.ai-msg-assistant .ai-msg-bubble {
+    background: #FFFFFF;
+    color: var(--ink);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom-left-radius: 4px;
+}
+
+.ai-md-h4 {
+    margin: 8px 0 4px;
+    font-size: 0.875rem;
+    color: var(--accent);
+}
+
+.ai-md-li {
+    margin-left: 14px;
+    list-style: disc;
+}
+
+.ai-loading-dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 16px;
+}
+
+.ai-loading-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--ink-muted);
+    animation: ai-pulse 1.2s infinite ease-in-out both;
+}
+
+.ai-loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+.ai-loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes ai-pulse {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40% { transform: scale(1); opacity: 1; }
+}
+
+.ai-chat-form {
+    display: flex;
+    align-items: center;
+    padding: 12px 14px;
+    border-top: 1px solid var(--ink-faint);
+    background: #FFFFFF;
+    gap: 8px;
+}
+
+.ai-chat-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 0.8125rem;
+    font-family: inherit;
+    color: var(--ink);
+    background: transparent;
+}
+
+.ai-chat-submit {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: var(--ink);
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    flex-shrink: 0;
+}
+
+.ai-chat-submit:hover {
+    background: var(--accent);
+    transform: scale(1.05);
+}
+
+@media (max-width: 760px) {
+    .ai-chat-toggle {
+        left: var(--gutter);
+        bottom: 24px;
+        height: 40px;
+    }
+    .ai-chat-popover {
+        left: 16px;
+        right: 16px;
+        width: auto;
+        bottom: 76px;
+    }
+}

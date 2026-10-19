@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aditi Sharma ——— Product Designer</title>
+    <meta name="description" content="Portfolio of Aditi Sharma. Product Designer at NIFT Bengaluru. Designing digital experiences that make complex systems feel simple.">
+    <meta property="og:title" content="Aditi Sharma ——— Product Designer">
+    <meta property="og:description" content="I design digital experiences that make complex things feel simple.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Aditi Sharma">
+    <link rel="icon" type="image/svg+xml" href="assets/logomark.svg">
+    <link rel="stylesheet" href="css/styles.css">
+    <script>
+        (function () {
+            var nav = (performance.getEntriesByType && performance.getEntriesByType('navigation')[0]) || {};
+            var slug = (location.hash.match(/from=([\w-]+)/) || [])[1];
+            try {
+                if (nav.type === 'reload') sessionStorage.removeItem('pf.lastProject');
+                else slug = slug || sessionStorage.getItem('pf.lastProject');
+            } catch (e) {}
+            if (nav.type === 'reload') slug = null;
+            if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+            if (slug) { window.PF_RETURN_TO = slug; document.documentElement.classList.add('returning'); }
+        })();
+    </script>
+    <script src="vendor/card-carousel.js" defer></script>
+    <script src="vendor/segmented-control.js" defer></script>
+    <script src="js/sound.js" defer></script>
+    <script src="js/home.js" defer></script>
+    <script src="js/chat.js" defer></script>
+</head>
+
+<body class="home">
+    <header class="site-header">
+        <a class="logomark" href="./" aria-label="Aditi Sharma — home">
+            <img src="assets/logomark.svg" alt="" width="24" height="24">
+            <span class="logomark-name">ADITI SHARMA</span>
+        </a>
+
+        <div class="intro">
+            <p class="who-i-am">I design and build things that make complex systems feel intuitive, tactile, and visually effortless.</p>
+
+            <div class="what-i-do">
+                <p>Studying Product & UX Design at <span class="nowrap"><a class="accent" href="https://nift.ac.in/bengaluru/" target="_blank" rel="noopener">NIFT Bengaluru</a>.</span> Bridging deep UX research, information architecture, and front-end engineering.</p>
+
+                <nav class="links" aria-label="Elsewhere">
+                    <a href="https://www.behance.net/gallery/256956757/Canteen-20" target="_blank" rel="noopener">Behance</a>
+                    <span class="dot" aria-hidden="true">•</span>
+                    <a href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+                    <span class="dot" aria-hidden="true">•</span>
+                    <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+                    <span class="dot" aria-hidden="true">•</span>
+                    <a href="mailto:aditi.sharma.design@gmail.com" class="email-link" data-email="aditi.sharma.design@gmail.com">Email</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="stage">
+        <div class="carousel-frame" aria-hidden="true"></div>
+        <card-carousel
+            id="work-carousel"
+            style="position: absolute;"
+            effect="stretch"
+            bg="#f2f2f2"
+            radius="0"
+            images="assets/projects/web/card-canteen-2.png, assets/projects/web/card-breez.png, assets/projects/web/card-evaara.png, assets/projects/web/card-lumina.png, assets/projects/web/card-chronos.png, assets/projects/web/card-circles.webp, assets/projects/web/card-arkade.webp, assets/projects/web/card-polls.webp, assets/projects/web/card-audioviz.webp"
+            aria-label="Projects — drag, scroll or use arrow keys; click the centre card to open it"></card-carousel>
+
+        <div class="effect-switch">
+            <segmented-control
+                id="effect-control"
+                appearance="light"
+                options="Stretch, Bulge, Drum, Shatter, Dust"
+                selected="Stretch"
+                size="36"
+                pad="4.5"
+                roundness="1"
+                surface="#FFFFFF"
+                indicator="#282B32"
+                ink="#FFFFFF"
+                ink-2="#82849A"></segmented-control>
+        </div>
+    </main>
+
+    <!-- Case Study Drawer -->
+    <div id="drawer-backdrop" class="drawer-backdrop" aria-hidden="true"></div>
+    <aside id="project-drawer" class="project-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+        <div class="drawer-header">
+            <span id="drawer-category" class="drawer-tag">Product & Service Design</span>
+            <button id="drawer-close" class="drawer-close" aria-label="Close Case Study">×</button>
+        </div>
+
+        <div>
+            <h2 id="drawer-title" class="drawer-title">Canteen 2.0</h2>
+            <p id="drawer-subtitle" class="drawer-subtitle">Campus Dining & Pickup Ecosystem</p>
+            <p id="drawer-role" class="drawer-meta" style="margin-top: 8px;"></p>
+        </div>
+
+        <div id="drawer-metrics" class="drawer-metrics"></div>
+
+        <div class="drawer-section">
+            <h3>Problem Statement</h3>
+            <p id="drawer-challenge"></p>
+        </div>
+
+        <div class="drawer-section">
+            <h3>Strategic Approach</h3>
+            <p id="drawer-approach"></p>
+        </div>
+
+        <div class="drawer-section">
+            <h3>Process & Milestones</h3>
+            <div id="drawer-steps" class="drawer-steps"></div>
+        </div>
+
+        <div style="padding-top: 16px;">
+            <a id="drawer-behance" href="#" target="_blank" rel="noopener noreferrer" class="drawer-behance-btn">
+                View Full Behance Case Study →
+            </a>
+        </div>
+    </aside>
+</body>
+</html>

@@ -92,11 +92,21 @@
                 </button>
             </form>
         `;
-        document.body.appendChild(popover);
+        // 3. Mobile Backdrop
+        var backdrop = document.createElement('div');
+        backdrop.id = 'ai-chat-backdrop';
+        backdrop.className = 'ai-chat-backdrop';
+        backdrop.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(backdrop);
 
         // Bind events
         btn.addEventListener('click', toggleChat);
         document.getElementById('ai-close-btn').addEventListener('click', toggleChat);
+        backdrop.addEventListener('click', toggleChat);
+
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && isOpen) toggleChat();
+        });
 
         // Settings toggle
         var settingsBtn = document.getElementById('ai-settings-btn');
@@ -147,9 +157,11 @@
         isOpen = !isOpen;
         var popover = document.getElementById('ai-chat-popover');
         var btn = document.getElementById('ai-chat-toggle');
+        var backdrop = document.getElementById('ai-chat-backdrop');
         if (isOpen) {
             popover.classList.add('is-open');
             popover.setAttribute('aria-hidden', 'false');
+            if (backdrop) backdrop.classList.add('is-open');
             btn.classList.add('is-active');
             if (window.PFSound) window.PFSound.play('select');
             setTimeout(function () {
@@ -159,6 +171,7 @@
         } else {
             popover.classList.remove('is-open');
             popover.setAttribute('aria-hidden', 'true');
+            if (backdrop) backdrop.classList.remove('is-open');
             btn.classList.remove('is-active');
             if (window.PFSound) window.PFSound.play('photo-close');
         }

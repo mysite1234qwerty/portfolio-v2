@@ -13,33 +13,15 @@
 
     var PROJECTS = [
         {
-            slug: 'canteen-2',
-            title: 'Canteen 2.0',
-            subtitle: 'Campus Dining & Pickup Ecosystem',
-            image: 'assets/projects/web/card-canteen-2.png',
-            behanceUrl: 'https://www.behance.net/gallery/256956757/Canteen-20',
-            role: 'Lead Product Designer & UX Researcher',
-            category: 'Product & Service Design',
-            metrics: [{ label: 'Dwell Time', value: '-75%' }, { label: 'Accuracy', value: '98.2%' }, { label: 'Satisfaction', value: '4.9/5' }],
-            challenge: 'During peak class breaks, over 400 students simultaneously flooded the canteen counter, causing severe congestion, order errors, and high wait times.',
-            approach: 'Conducted on-site ethnographic shadowing, reorganized 120+ menu items into fast-tap categorical clusters, and decoupled ordering from payment with real-time preparation notifications.',
-            steps: [
-                { title: 'Field Shadowing & Friction Mapping', desc: 'Identified decision paralysis at printed menus as the root cause of queue halts.' },
-                { title: 'IA Restructure & Real-time States', desc: 'Re-indexed menu items with stock availability indicators.' },
-                { title: 'Haptic Micro-Interactions & Cart Flow', desc: 'Designed rapid add-to-cart thumb gestures and dual-tab meal customization.' },
-                { title: 'Staged Counter Handover Protocol', desc: 'Replaced verbal number shouting with numerical bay allocation.' }
-            ]
-        },
-        {
             slug: 'breez',
             title: 'Breez Mobility',
             subtitle: 'Premium Electric Chauffeur Platform',
-            image: 'assets/projects/web/card-breez.png',
+            image: 'assets/projects/web/card-breez.webp',
             behanceUrl: 'https://www.behance.net/gallery/256963973/Breez-Premium-Mobility',
             role: 'Product & Interaction Designer',
             category: 'Mobility & Responsive Web',
             metrics: [{ label: 'Booking Speed', value: '2.1 min' }, { label: 'Task Success', value: '99.4%' }, { label: 'Conversion', value: '+38%' }],
-            challenge: 'Enterprise corporate clients required multi-rider expense routing, while individual riders demanded immediate luxury vehicle allocation without cognitive friction.',
+            challenge: 'Enterprise corporate clients required multi-rider expense routing, while individual VIP riders demanded immediate luxury vehicle allocation without cognitive friction.',
             approach: 'Designed a split-purpose dual routing architecture allowing instant ride requests on mobile while offering deep corporate dashboard fleet controls on widescreen views.',
             steps: [
                 { title: 'B2B vs. B2C Stakeholder Segmentation', desc: 'Mapped executive assistants booking recurring trips vs. individual airport transfers.' },
@@ -49,56 +31,149 @@
             ]
         },
         {
-            slug: 'evaara',
-            title: 'Evaara Early Ed',
-            subtitle: 'Story-Led Progressive Preschool Experience',
-            image: 'assets/projects/web/card-evaara.png',
-            role: 'Digital Experience & Visual Designer',
-            category: 'Editorial & UX Design',
-            metrics: [{ label: 'Tour Inquiries', value: '+112%' }, { label: 'Scroll Depth', value: '82%' }, { label: 'Bounce Rate', value: '-28%' }],
-            challenge: 'Parents considering progressive child-led early-childhood pedagogy often feel apprehensive without clear curriculum transparency and tangible proof of developmental care.',
-            approach: 'Structured the site as an exploratory day-in-the-life narrative, replacing bureaucratic school catalogues with immersive classroom vignettes and educator profiles.',
+            slug: 'canteen-2',
+            title: 'Canteen 2.0',
+            subtitle: 'Campus Dining & Pickup Ecosystem',
+            image: 'assets/projects/web/card-canteen-2.webp',
+            behanceUrl: 'https://www.behance.net/gallery/256956757/Canteen-20',
+            role: 'Lead Product Designer & UX Researcher',
+            category: 'Product & Service Design',
+            metrics: [{ label: 'Dwell Time', value: '-75%' }, { label: 'Accuracy', value: '98.2%' }, { label: 'Satisfaction', value: '4.9/5' }],
+            challenge: 'During peak class breaks, over 400 students simultaneously flooded the canteen counter, causing severe queue bottlenecks, order errors, and high wait times.',
+            approach: 'Conducted on-site ethnographic shadowing, reorganized 120+ menu items into fast-tap categorical clusters, and decoupled ordering from payment with real-time preparation notifications.',
             steps: [
-                { title: 'Parent Anxiety Audit', desc: 'Interviewed 24 parents to identify pivotal hesitation points during preschool selection.' },
-                { title: 'Narrative Content Sequencing', desc: 'Arranged page hierarchies to answer emotional reassurance questions before technical admission details.' },
-                { title: 'Warm Editorial Typography & Spacing', desc: 'Utilized generous editorial whitespace and tactile imagery containers.' },
-                { title: 'Micro-Step Tour Scheduling', desc: 'Constructed a low-commitment tour calendar reducing abandonment rates.' }
+                { title: 'Field Shadowing & Friction Mapping', desc: 'Identified decision paralysis at printed menus as the root cause of queue halts.' },
+                { title: 'IA Restructure & Real-time States', desc: 'Re-indexed menu items with stock availability indicators.' },
+                { title: 'Haptic Micro-Interactions & Cart Flow', desc: 'Designed rapid add-to-cart thumb gestures and dual-tab meal customization.' },
+                { title: 'Staged Counter Handover Protocol', desc: 'Replaced verbal number shouting with numerical bay allocation.' }
             ]
         },
         {
-            slug: 'lumina',
-            title: 'Lumina Studio',
-            subtitle: 'Spatial Generative Interface Kit',
-            image: 'assets/projects/web/card-lumina.png',
-            role: 'Creative Technologist',
-            category: 'Design Engineering',
-            metrics: [{ label: 'Frame Rate', value: '60 FPS' }, { label: 'Bundle Size', value: '18 KB' }],
-            challenge: 'Modern creative applications struggle to bridge dense toolsets with playful, visceral direct manipulation.',
-            approach: 'Engineered responsive WebGL canvas textures reacting to pointer inertia, audio frequencies, and spring-physics controls.',
+            slug: 'what-scene',
+            title: 'What Scene?',
+            subtitle: 'Social Event & Group Decision App',
+            image: 'assets/projects/web/card-what-scene.webp',
+            behanceUrl: 'https://www.behance.net/gallery/249215845/What-Scene',
+            role: 'Product Designer & UX Researcher',
+            category: 'Social Discovery & Mobile UX',
+            metrics: [{ label: 'Decision Time', value: '-60%' }, { label: 'Group Alignment', value: '94%' }, { label: 'Engagement', value: '+4.2x' }],
+            challenge: 'Group social outings suffer from decision fatigue, endless back-and-forth messaging across chat apps, and fragmented venue links.',
+            approach: 'Engineered a collaborative polling and discovery interface with swipable venue cards, synchronized group voting, and integrated location-based reservations.',
             steps: [
-                { title: 'Materiality & Glass Shaders', desc: 'Implemented real-time refractive vertex and fragment shaders in GLSL.' },
-                { title: 'Audio-Haptic Integration', desc: 'Coupled sound synthesizers to UI state transitions for immediate confirmation.' }
+                { title: 'Social Decision Mapping', desc: 'Identified hesitation loops in friend group chats when picking venues.' },
+                { title: 'Swipe & Vote Micro-Interactions', desc: 'Designed rapid gesture-based voting cards to reach consensus in seconds.' },
+                { title: 'AI-Curated Recommendations', desc: 'Contextual activity suggestions tailored to group vibe, distance, and budget.' },
+                { title: 'Itinerary Synchronization', desc: 'One-tap calendar and map sharing with unified Uber/ride integration.' }
             ]
         },
         {
-            slug: 'chronos',
-            title: 'Chronos AI',
-            subtitle: 'Contextual Ambient Intelligence Workspace',
-            image: 'assets/projects/web/card-chronos.png',
-            role: 'Product Designer',
-            category: 'Product Architecture',
-            metrics: [{ label: 'Focus Duration', value: '+45m' }, { label: 'Context Switching', value: '-62%' }],
-            challenge: 'Knowledge workers lose up to 40% of their creative flow switching between tab-heavy tools and static calendars.',
-            approach: 'Designed a single-surface stream with proactive timeline collapsing and adaptive typography.',
+            slug: 'plantpal',
+            title: 'Plantpal?',
+            subtitle: 'Intelligent Plant Care & Habit Companion',
+            image: 'assets/projects/web/card-plantpal.webp',
+            behanceUrl: 'https://www.behance.net/gallery/247042879/Plantpal',
+            role: 'UX/UI Designer',
+            category: 'Mobile UX & IoT Integration',
+            metrics: [{ label: 'Plant Survival', value: '92%' }, { label: 'Daily Retention', value: '74%' }, { label: 'Habit Completion', value: '88%' }],
+            challenge: 'Plant owners struggle to maintain consistent watering schedules and diagnose subtle plant diseases without complicated botanical manuals.',
+            approach: 'Designed an ambient plant care companion with smart camera diagnosis, personalized sunlight-watering calendars, and micro-delight progress animations.',
             steps: [
-                { title: 'Attention Span & Interruption Metrics', desc: 'Studied workflow interruptions across 30 design students and practitioners.' },
-                { title: 'Calm UI Architecture', desc: 'Stripped away notification badges in favor of ambient color shifts and gentle sound cues.' }
+                { title: 'Plant Parent Journey Audit', desc: 'Interviewed indoor plant enthusiasts to map root causes of plant neglect.' },
+                { title: 'Visual Diagnosis Camera Flow', desc: 'Streamlined disease and moisture scanning to an instant 2-step capture.' },
+                { title: 'Ambient Habit Tracking', desc: 'Crafted gentle, non-intrusive watering reminders with tactile widget cards.' },
+                { title: 'Micro-Interactions & Growth Logs', desc: 'Animated botanical growth timelines rewarding sustained care habits.' }
             ]
         },
-        { slug: 'circles', title: 'Circles', image: 'assets/projects/web/card-circles.webp' },
-        { slug: 'arkade', title: 'Arkade', image: 'assets/projects/web/card-arkade.webp' },
-        { slug: 'polls', title: 'Polls', image: 'assets/projects/web/card-polls.webp' },
-        { slug: 'audioviz', title: 'Audioviz', image: 'assets/projects/web/card-audioviz.webp' }
+        {
+            slug: 'celestine',
+            title: 'Célestine',
+            subtitle: 'Haute Joaillerie & Luxury E-Commerce Experience',
+            image: 'assets/projects/web/card-celestine.webp',
+            behanceUrl: 'https://www.behance.net/gallery/246858161/Clestine-A-Luxury-E-commerce-Experience',
+            role: 'Lead Visual & Experience Designer',
+            category: 'Luxury Editorial & E-Commerce',
+            metrics: [{ label: 'Cart Value', value: '+44%' }, { label: 'Engagement', value: '+85%' }, { label: 'Return Rate', value: '-18%' }],
+            challenge: 'Translating the tactile, sensory prestige of bespoke high jewelry to a digital surface while preserving exclusivity and emotional intimacy.',
+            approach: 'Created an editorial, high-touch luxury browsing experience with bespoke micro-typography, high-fidelity 360° product rotations, and personalized concierge checkout.',
+            steps: [
+                { title: 'Luxury Buyer Persona Synthesis', desc: 'Mapped sensory expectations and trust signals of ultra-high-net-worth buyers.' },
+                { title: 'Editorial Typographic Hierarchy', desc: 'Balanced high-contrast serif headlines with generous breathing whitespace.' },
+                { title: 'Tactile Direct Manipulation', desc: 'Interactive jewelry viewports highlighting gemstone reflections and craft details.' },
+                { title: 'Bespoke Concierge Booking', desc: 'Frictionless private salon appointments and custom engraving previews.' }
+            ]
+        },
+        {
+            slug: 'myjio',
+            title: 'MyJio App Redesign',
+            subtitle: 'Telecom & Multi-Service Super App Architecture',
+            image: 'assets/projects/web/card-myjio.webp',
+            behanceUrl: 'https://www.behance.net/gallery/246794973/MyJio-App-Redesign',
+            role: 'Product Designer & Systems Architect',
+            category: 'Super App & Design System',
+            metrics: [{ label: 'Recharge Speed', value: '3.2s' }, { label: 'Visual Clutter', value: '-50%' }, { label: 'Task Success', value: '96.8%' }],
+            challenge: 'With over 400 million active users, the MyJio super-app suffered from feature bloat, high cognitive overload, and buried core telecom utility actions.',
+            approach: 'Modularized the home dashboard with dynamic smart utility widgets, reduced recharge steps from 6 to 2, and standardized a high-contrast accessible design system.',
+            steps: [
+                { title: 'Super-App Information Architecture Audit', desc: 'Deconstructed 60+ nested sub-services into 4 clear functional zones.' },
+                { title: 'One-Tap Recharge Flow', desc: 'Replaced multi-step forms with contextual quick-pay cards and biometric checkout.' },
+                { title: 'Modular Card Grid System', desc: 'Engineered an adaptable widget layout accommodating personalized telecom alerts.' },
+                { title: 'Accessibility & Contrast Benchmarking', desc: 'Tested WCAG AAA compliance for diverse regional demographic readability.' }
+            ]
+        },
+        {
+            slug: 'gigverse',
+            title: 'Gigverse',
+            subtitle: 'Decentralized Creator Economy Marketplace',
+            image: 'assets/projects/web/card-gigverse.webp',
+            behanceUrl: 'https://www.behance.net/gallery/246768791/Gigverse',
+            role: 'Product Architect & UX Designer',
+            category: 'Marketplace & Fintech UX',
+            metrics: [{ label: 'Match Rate', value: '89%' }, { label: 'Payout Speed', value: '< 1 hr' }, { label: 'Dispute Rate', value: '< 1.2%' }],
+            challenge: 'Freelance digital creators face opaque platform fees, delayed international escrow payouts, and fragmented portfolio verification.',
+            approach: 'Architected a transparent gig discovery marketplace featuring smart contract escrow milestone releases, instant wallet withdrawals, and verified talent scorecards.',
+            steps: [
+                { title: 'Creator Monetization Friction Audit', desc: 'Interviewed 40 independent digital artists on payment and contract pain points.' },
+                { title: 'Milestone Escrow Visualization', desc: 'Crafted transparent timeline cards showing funds locked, approved, and released.' },
+                { title: 'Interactive Talent Profiles', desc: 'Rich media showcase grids displaying live verified client reviews.' },
+                { title: 'Frictionless Payout Gateway', desc: 'Multi-currency and instant crypto/fiat withdrawal switches.' }
+            ]
+        },
+        {
+            slug: 'foodmate',
+            title: 'Foodmate',
+            subtitle: 'Smart Meal Planning & Pantry Expiry Tracker',
+            image: 'assets/projects/web/card-foodmate.webp',
+            behanceUrl: 'https://www.behance.net/gallery/246237433/Foodmate',
+            role: 'UX Researcher & Interaction Designer',
+            category: 'Consumer Mobile & Sustainability',
+            metrics: [{ label: 'Food Waste', value: '-42%' }, { label: 'Prep Time Saved', value: '3.5 hrs/wk' }, { label: 'Repeat Use', value: '81%' }],
+            challenge: 'Household food waste causes substantial financial loss and environmental impact due to unmonitored pantry expirations and disjointed grocery lists.',
+            approach: 'Developed an intelligent pantry scanning interface that recommends personalized recipes based on expiring ingredients and auto-syncs grocery cart items.',
+            steps: [
+                { title: 'Kitchen Ethnography & Waste Logging', desc: 'Tracked kitchen discard habits across 20 suburban households.' },
+                { title: 'Barcode & Receipt OCR Scanner', desc: 'Instant item logging with automatic shelf-life categorization.' },
+                { title: 'Dynamic Recipe Suggester', desc: 'Smart recipe cards ranked by ingredients currently in danger of spoiling.' },
+                { title: 'Collaborative Household Grocery Sync', desc: 'Real-time multi-user cart checkoff for shared apartments.' }
+            ]
+        },
+        {
+            slug: 'magazine',
+            title: 'Magazine Editorial',
+            subtitle: 'Print & Digital Editorial Typography System',
+            image: 'assets/projects/web/card-magazine.webp',
+            behanceUrl: 'https://www.behance.net/gallery/201498851/Magazine-design',
+            role: 'Editorial & Art Director',
+            category: 'Typography & Editorial Layout',
+            metrics: [{ label: 'Read-Through', value: '88%' }, { label: 'Visual Rhythm', value: 'Selected' }, { label: 'Praise', value: 'Top Honors' }],
+            challenge: 'Crafting an experimental typographic system that balances bold avant-garde layout structures with sustained narrative legibility.',
+            approach: 'Designed modular multi-column grids, asymmetrical pull-quote treatments, and tactile editorial paper spreads translated to responsive interactive digital views.',
+            steps: [
+                { title: 'Typographic Grid Architecture', desc: 'Formulated a 12-column baseline grid with variable leading and tracking.' },
+                { title: 'Asymmetrical Layout Exploration', desc: 'Pioneered contrasting scale relationships between display type and body text.' },
+                { title: 'Materiality & Print Finishing', desc: 'Specified spot varnishes, foil stamping, and tactile uncoated paper stocks.' },
+                { title: 'Digital Editorial Translation', desc: 'Adapted publication pacing to swipeable horizontal screens and tablet readers.' }
+            ]
+        }
     ];
 
     window.ADITI_PROJECTS = PROJECTS;

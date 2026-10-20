@@ -75,9 +75,11 @@
 
             <div class="ai-chat-body" id="ai-chat-body">
                 <div class="ai-chips-row">
-                    <button class="ai-chip" data-prompt="Suggest 3 micro-interactions for an electric chauffeur app">Mobility Ideas</button>
-                    <button class="ai-chip" data-prompt="How would you restructure a high-traffic student canteen menu?">Canteen IA</button>
-                    <button class="ai-chip" data-prompt="What spatial UX patterns work well with 3D card manipulation?">Spatial UX</button>
+                    <button class="ai-chip" data-prompt="Suggest 3 micro-interactions for the Breez electric chauffeur app">Breez UX</button>
+                    <button class="ai-chip" data-prompt="How was decision fatigue tackled in the 'What Scene?' group planning app?">What Scene?</button>
+                    <button class="ai-chip" data-prompt="How did Canteen 2.0 reduce dwell time by 75%?">Canteen 2.0</button>
+                    <button class="ai-chip" data-prompt="What editorial UX patterns elevate Célestine high jewelry e-commerce?">Célestine</button>
+                    <button class="ai-chip" data-prompt="How would you approach super-app decluttering like the MyJio redesign?">MyJio Redesign</button>
                 </div>
                 <div id="ai-messages-list" class="ai-messages-list"></div>
             </div>

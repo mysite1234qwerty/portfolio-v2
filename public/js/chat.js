@@ -94,6 +94,8 @@
                 </button>
             </form>
         `;
+        document.body.appendChild(popover);
+
         // 3. Mobile Backdrop
         var backdrop = document.createElement('div');
         backdrop.id = 'ai-chat-backdrop';

@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import Script from "next/script";
+import VenomButton from "@/components/VenomButton";
 
 export default function Home() {
   useEffect(() => {
@@ -61,6 +62,16 @@ export default function Home() {
                 Email
               </a>
             </nav>
+
+            <div style={{ marginTop: "10px", pointerEvents: "auto" }}>
+              <VenomButton 
+                label="let’s collaborate"
+                style={{ height: "96px", maxWidth: "300px", margin: "0" }}
+                onActivate={() => {
+                  window.location.href = "mailto:aditi.sharma.design@gmail.com?subject=Collaboration%20Inquiry";
+                }}
+              />
+            </div>
           </div>
         </div>
       </header>

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { site } from "@/content/site";
 import { sound } from "@/lib/sound";
 import { Copy, Check, ArrowUpRight } from "lucide-react";
+import VenomButton from "./VenomButton";
 
 export function Footer() {
   const [copied, setCopied] = useState(false);
@@ -27,6 +28,16 @@ export function Footer() {
         <p className="text-neutral-400 text-base max-w-xl">
           Always open to product design opportunities, design engineering explorations, and thoughtful conversations.
         </p>
+
+        {/* Venom-themed interactive collaboration button */}
+        <div className="pt-2">
+          <VenomButton 
+            label="let’s collaborate"
+            onActivate={() => {
+              window.location.href = `mailto:${site.contact.email}?subject=Collaboration%20Inquiry`;
+            }}
+          />
+        </div>
 
         {/* Copyable email pill */}
         <div className="pt-2 flex items-center gap-3">

@@ -20,7 +20,7 @@ export default function Home() {
       {/* Header */}
       <header className="site-header">
         <a className="logomark" href="./" aria-label="Aditi Sharma — home">
-          <img src="/assets/logomark.svg" alt="" width="24" height="24" />
+          <img src="/assets/logo.png" alt="Aditi Sharma" width="38" height="38" />
           <span className="logomark-name">ADITI SHARMA</span>
         </a>
 
@@ -46,32 +46,27 @@ export default function Home() {
                 Behance
               </a>
               <span className="dot" aria-hidden="true">•</span>
-              <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.linkedin.com/in/aditi-sharma-982093304/" target="_blank" rel="noopener noreferrer">
                 LinkedIn
               </a>
               <span className="dot" aria-hidden="true">•</span>
-              <a href="https://github.com/" target="_blank" rel="noopener noreferrer">
-                GitHub
-              </a>
-              <span className="dot" aria-hidden="true">•</span>
               <a
-                href="mailto:aditi.sharma.design@gmail.com"
+                href="mailto:aditi.sharma@nift.ac.in"
                 className="email-link"
-                data-email="aditi.sharma.design@gmail.com"
+                data-email="aditi.sharma@nift.ac.in"
               >
                 Email
               </a>
+              <span className="dot" aria-hidden="true">•</span>
+              <a
+                href="/assets/Aditi_Sharma_Resume.pdf"
+                download="Aditi_Sharma_Resume.pdf"
+                className="resume-link"
+                aria-label="Download Aditi Sharma Resume PDF"
+              >
+                Resume
+              </a>
             </nav>
-
-            <div style={{ marginTop: "10px", pointerEvents: "auto" }}>
-              <VenomButton 
-                label="let’s collaborate"
-                style={{ height: "96px", maxWidth: "300px", margin: "0" }}
-                onActivate={() => {
-                  window.location.href = "mailto:aditi.sharma.design@gmail.com?subject=Collaboration%20Inquiry";
-                }}
-              />
-            </div>
           </div>
         </div>
       </header>
@@ -85,17 +80,34 @@ export default function Home() {
           style={{ position: "absolute" }}
           effect="stretch"
           bg="#f2f2f2"
-          radius="0"
-          images="assets/projects/web/card-canteen-2.png, assets/projects/web/card-breez.png, assets/projects/web/card-evaara.png, assets/projects/web/card-lumina.png, assets/projects/web/card-chronos.png, assets/projects/web/card-circles.webp, assets/projects/web/card-arkade.webp, assets/projects/web/card-polls.webp, assets/projects/web/card-audioviz.webp"
-          aria-label="Projects — drag, scroll or use arrow keys; click the centre card to open it"
+          radius="0.03"
+          startcard="4"
+          hfrac="0.40"
+          wfrac="0.35"
+          wfractall="0.68"
+          gap="0.12"
+          lift="0.02"
+          images="assets/projects/web/card-myjio.webp, assets/projects/web/card-breez.webp, assets/projects/web/card-canteen-2.webp, assets/projects/web/card-foodmate.webp, assets/projects/web/card-what-scene.webp, assets/projects/web/card-gigverse.webp"
+          aria-label="Projects — drag, scroll or use arrow keys; click any card to view on Behance"
         />
 
+        {/* Bottom Centre: Glossy Black Venom Collaboration Button */}
+        <div className="venom-dock">
+          <VenomButton 
+            label="let’s collaborate"
+            onActivate={() => {
+              window.location.href = "mailto:aditi.sharma@nift.ac.in?subject=Collaboration%20Inquiry";
+            }}
+          />
+        </div>
+
+        {/* Bottom Right: Effect-Selection Controls */}
         <div className="effect-switch">
           {/* @ts-expect-error Custom Web Component */}
           <segmented-control
             id="effect-control"
             appearance="light"
-            options="Stretch, Bulge, Drum, Shatter, Dust"
+            options="Stretch, Drum, Shatter, Dust"
             selected="Stretch"
             size="36"
             pad="4.5"
@@ -108,50 +120,11 @@ export default function Home() {
         </div>
       </main>
 
-      {/* Case Study Drawer */}
-      <div id="drawer-backdrop" className="drawer-backdrop" aria-hidden="true" />
-      <aside id="project-drawer" className="project-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
-        <div className="drawer-header">
-          <span id="drawer-category" className="drawer-tag">Product & Service Design</span>
-          <button id="drawer-close" className="drawer-close" aria-label="Close Case Study">×</button>
-        </div>
-
-        <div>
-          <h2 id="drawer-title" className="drawer-title">Canteen 2.0</h2>
-          <p id="drawer-subtitle" className="drawer-subtitle">Campus Dining & Pickup Ecosystem</p>
-          <p id="drawer-role" className="drawer-meta" style={{ marginTop: "8px" }} />
-        </div>
-
-        <div id="drawer-metrics" className="drawer-metrics" />
-
-        <div className="drawer-section">
-          <h3>Problem Statement</h3>
-          <p id="drawer-challenge" />
-        </div>
-
-        <div className="drawer-section">
-          <h3>Strategic Approach</h3>
-          <p id="drawer-approach" />
-        </div>
-
-        <div className="drawer-section">
-          <h3>Process & Milestones</h3>
-          <div id="drawer-steps" className="drawer-steps" />
-        </div>
-
-        <div style={{ paddingTop: "16px" }}>
-          <a id="drawer-behance" href="#" target="_blank" rel="noopener noreferrer" className="drawer-behance-btn">
-            View Full Behance Case Study →
-          </a>
-        </div>
-      </aside>
-
       {/* Scripts */}
-      <Script src="/vendor/card-carousel.js" strategy="afterInteractive" />
-      <Script src="/vendor/segmented-control.js" strategy="afterInteractive" />
-      <Script src="/js/sound.js" strategy="afterInteractive" />
-      <Script src="/js/home.js" strategy="lazyOnload" />
-      <Script src="/js/chat.js" strategy="lazyOnload" />
+      <Script src="/vendor/card-carousel.js?v=6" strategy="afterInteractive" />
+      <Script src="/vendor/segmented-control.js?v=6" strategy="afterInteractive" />
+      <Script src="/js/sound.js?v=6" strategy="afterInteractive" />
+      <Script src="/js/home.js?v=6" strategy="afterInteractive" />
     </>
   );
 }

@@ -37,8 +37,8 @@ const P = {
   pull: 1.0,
   gravity: 900,
   sheen: 0,
-  sound: 1,           // 1 = sound enabled, 0 = muted
-  volume: 0.85,       // UI click master volume
+  sound: typeof window !== 'undefined' && (window as any).PFSound ? ((window as any).PFSound.on ? 1 : 0) : 1,
+  volume: 0.85,
 };
 const DEFAULTS = { ...P };
 
@@ -71,7 +71,8 @@ const fontReady = ensureFont();
 const LABEL_TEXT = 'let’s collaborate';
 const LABEL_NUDGE = 1;  // px the label sits below centre
 const LABEL_PX = 120;   // glyph size drawn into the label canvas
-const LABEL_CSS = 19;   // on-screen label size, CSS px
+const LABEL_CSS = 18;   // on-screen label size, CSS px
+const LABEL_W = 1024, LABEL_H = 256;
 const LIFT_H = 14;      // how far the whole slab rises off the floor on hover, px
 const BEVEL = 3;        // edge rounding of the slab: small = the shine runs right up to the border
 let labelInkW = 0;      // drawn width of the current label, canvas px
@@ -139,82 +140,57 @@ class SubtleAudio {
     return this.ctx;
   }
 
-  // Distinct, satisfying, tactile UI click (25–35ms)
+  // Single, extremely subtle, soft tactile click (24ms)
   playPress() {
     try {
       const ac = this.getContext();
       if (!ac || !P.sound || P.volume <= 0.001) return;
       const now = ac.currentTime;
-      if (now - this.lastPressTime < 0.05) return; // prevent rapid overlapping
+      if (now - this.lastPressTime < 0.06) return; // prevent rapid overlapping
       this.lastPressTime = now;
 
       // Master output gain
       const master = ac.createGain();
-      master.gain.setValueAtTime(P.volume, now);
+      master.gain.setValueAtTime(P.volume * 0.25, now);
       master.connect(ac.destination);
 
-      // Warm tactile body (sine wave 320Hz -> 130Hz)
+      // Warm tactile body (sine wave 260Hz -> 105Hz)
       const osc = ac.createOscillator();
       const gain = ac.createGain();
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(320, now);
-      osc.frequency.exponentialRampToValueAtTime(130, now + 0.03);
+      osc.frequency.setValueAtTime(260, now);
+      osc.frequency.exponentialRampToValueAtTime(105, now + 0.024);
 
       gain.gain.setValueAtTime(0.001, now);
-      gain.gain.linearRampToValueAtTime(0.52, now + 0.002);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.032);
+      gain.gain.linearRampToValueAtTime(0.24, now + 0.0015);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.025);
 
       osc.connect(gain);
       gain.connect(master);
       osc.start(now);
-      osc.stop(now + 0.034);
+      osc.stop(now + 0.026);
 
-      // Crisp click definition (triangle transient 680Hz -> 220Hz)
+      // Soft crisp click definition (triangle transient 500Hz -> 180Hz)
       const tOsc = ac.createOscillator();
       const tGain = ac.createGain();
       tOsc.type = 'triangle';
-      tOsc.frequency.setValueAtTime(680, now);
-      tOsc.frequency.exponentialRampToValueAtTime(220, now + 0.015);
+      tOsc.frequency.setValueAtTime(500, now);
+      tOsc.frequency.exponentialRampToValueAtTime(180, now + 0.012);
 
       tGain.gain.setValueAtTime(0.001, now);
-      tGain.gain.linearRampToValueAtTime(0.28, now + 0.001);
-      tGain.gain.exponentialRampToValueAtTime(0.001, now + 0.015);
+      tGain.gain.linearRampToValueAtTime(0.12, now + 0.001);
+      tGain.gain.exponentialRampToValueAtTime(0.001, now + 0.012);
 
       tOsc.connect(tGain);
       tGain.connect(master);
       tOsc.start(now);
-      tOsc.stop(now + 0.016);
+      tOsc.stop(now + 0.014);
     } catch (e) {}
   }
 
-  // Faint, clean release tick (20ms)
+  // Silent release to prevent repeated audio
   playRelease() {
-    try {
-      const ac = this.getContext();
-      if (!ac || !P.sound || P.volume <= 0.001) return;
-      const now = ac.currentTime;
-
-      const master = ac.createGain();
-      master.gain.setValueAtTime(P.volume, now);
-      master.connect(ac.destination);
-
-      const osc = ac.createOscillator();
-      const gain = ac.createGain();
-
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(260, now);
-      osc.frequency.exponentialRampToValueAtTime(140, now + 0.022);
-
-      gain.gain.setValueAtTime(0.001, now);
-      gain.gain.linearRampToValueAtTime(0.26, now + 0.002);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.024);
-
-      osc.connect(gain);
-      gain.connect(master);
-
-      osc.start(now);
-      osc.stop(now + 0.026);
-    } catch (e) {}
+    // Left silent so only one soft click plays on press
   }
 }
 const audio = new SubtleAudio();
@@ -825,14 +801,14 @@ float buttonShadow(vec2 p) {
   float dropSh = exp(-d1 / (8.0 + h * 0.25 + lift * 0.6)) * (0.34 - 0.08 * (1.0 - grounded)); // soft key shadow
   float ambient = exp(-d0 / 34.0) * 0.12;                                     // wide skylight fade
   float lit = (1.0 - contact) * (1.0 - occl) * (1.0 - dropSh) * (1.0 - ambient);
-  return clamp(1.0 - lit, 0.0, 0.88);
+  float fade = 1.0 - smoothstep(26.0, 38.0, d0);
+  return clamp((1.0 - lit) * fade, 0.0, 0.88);
 }
 
 vec3 floorShade(vec2 p) {
   float sh = 1.0, ao = 1.0;
   if (isNear(p)) { sh = softShadow(p, 0.0); ao = mix(occlusion(p, 0.0), 1.0, 0.55 * uLift); } // lifted: no contact crease
-  vec2 v = p / (uRes / uDpr);
-  float falloff = 1.0 - 0.08 * length(v - vec2(0.32, 0.22));
+  float falloff = 1.0;
   vec3 alb = vec3(0.86, 0.865, 0.875);
   vec3 lit = alb * (vec3(1.0, 0.985, 0.96) * 1.3 * KEY.z * sh + vec3(0.92, 0.95, 1.0) * 1.2 * ao) * falloff;
   return lit * (1.0 - buttonShadow(p) * vec3(0.96, 0.94, 0.9)); // shadows stay a touch cool, like skylight fill
@@ -960,7 +936,6 @@ function makeGBuffer() {
 }
 
 // ───────────────────────────── label (SVG → mask texture) ─────────────────────────────
-const LABEL_W = 1024, LABEL_H = 256;
 const labelCanvas = document.createElement('canvas');
 labelCanvas.width = LABEL_W; labelCanvas.height = LABEL_H;
 const lctx = labelCanvas.getContext('2d');
@@ -1229,6 +1204,9 @@ function split(s, g) {
   if (strands.length < MAXS) strands.push(tip);
   addRipple(g.cx + s.lx * g.hw, g.cy + s.ly * g.hh, 0.8);
   lastSnap = time;
+  if (typeof window !== "undefined" && (window as any).PFSound) {
+    (window as any).PFSound.play("tendril-snap");
+  }
 }
 
 function releaseAll(absorb) {
@@ -1492,7 +1470,13 @@ function step(dt) {
     else if (inside) releaseAll(true);
     else {
       const want = e.d < P.reach ? Math.min(P.maxStrands, Math.round(Math.min(2, P.maxStrands) + Math.max(0, P.maxStrands - 2) * ease(P.reach, P.reach * 0.4, e.d))) : 0;
-      if (active < want && time - lastSpawn > rand(0.03, 0.06) && time - lastSnap > 0.15) { spawnReach(g); lastSpawn = time; }
+      if (active < want && time - lastSpawn > rand(0.03, 0.06) && time - lastSnap > 0.15) {
+        spawnReach(g);
+        lastSpawn = time;
+        if (typeof window !== "undefined" && (window as any).PFSound) {
+          (window as any).PFSound.play("tendril-reach");
+        }
+      }
       const micro = strands.filter((s) => s.kind === 'micro' && s.state !== 'recoil').length;
       if (micro < Math.round(9 * ease(0.1, 0.8, aware)) && time - lastMicro > rand(0.03, 0.07)) { spawnMicro(g); lastMicro = time; }
     }
@@ -1750,11 +1734,11 @@ function render() {
 // ───────────────────────────── layout & loop ─────────────────────────────
 function layoutButton() {
   btn.cx = viewW() / 2;
-  btn.cy = viewH() / 2;
-  // the pill hugs the word: its caps begin just past the first and last letters
+  btn.cy = 44;
+  // sleek pill hugging the typography with reduced vertical height
   const sc = LABEL_CSS / LABEL_PX;
-  btn.hh = 30;                                    // 60px tall: more room above and below the word
-  btn.hw = ((labelInkW || 520) * sc) / 2 + 30;    // tighter sides: 30px past the first and last letters
+  btn.hh = 26;                                    // 52px tall: slim, refined vertical profile
+  btn.hw = ((labelInkW || 520) * sc) / 2 + 28;    // proportional side padding
   btn.lbw = (LABEL_W * sc) / 2;
   btn.lbh = (LABEL_H * sc) / 2;
   Object.assign(hitEl.style, {
@@ -1801,9 +1785,16 @@ animId = requestAnimationFrame(frame);
 
 // ───────────────────────────── input ─────────────────────────────
 function insidePill(x, y) { return pillEdge(x, y, geo()).d < 0; }
+let isCurrentlyOver = false;
 function setOver(on) {
   if (container) container.classList.toggle("is-over-goo", on);
   if (hitEl) hitEl.style.cursor = on ? "pointer" : "default";
+  if (on && !isCurrentlyOver) {
+    if (typeof window !== "undefined" && (window as any).PFSound) {
+      (window as any).PFSound.play("tab-hover");
+    }
+  }
+  isCurrentlyOver = on;
 }
 
 function getPointerPos(e) {
@@ -1820,11 +1811,14 @@ const onPointerMove = (e) => {
   const pos = getPointerPos(e);
   const ex = pos.x, ey = pos.y;
   const w = viewW(), h = viewH();
-  const inRange = ex >= -140 && ex <= w + 140 && ey >= -140 && ey <= h + 140;
+  const inRange = ex >= -120 && ex <= w + 120 && ey >= -120 && ey <= h + 120;
 
   if (cur.present) { cur.vx = (ex - cur.lx) / dts; cur.vy = (ey - cur.ly) / dts; }
   cur.t = now;
-  cur.x = cur.lx = ex; cur.y = cur.ly = ey;
+  // Keep symbiote tendril attractors smoothly within canvas boundaries
+  const padX = 22, padY = 16;
+  cur.x = cur.lx = Math.max(padX, Math.min(w - padX, ex));
+  cur.y = cur.ly = Math.max(padY, Math.min(h - padY, ey));
   cur.mouse = e.pointerType === "mouse" || e.pointerType === "pen";
   cur.present = inRange && (cur.mouse || cur.down);
   setOver(insidePill(cur.x, cur.y));
@@ -1833,7 +1827,10 @@ const onPointerMove = (e) => {
 const onPointerRawUpdate = (e) => {
   if (cur.present && cur.mouse) {
     const pos = getPointerPos(e);
-    cur.x = pos.x; cur.y = pos.y;
+    const w = viewW(), h = viewH();
+    const padX = 22, padY = 16;
+    cur.x = Math.max(padX, Math.min(w - padX, pos.x));
+    cur.y = Math.max(padY, Math.min(h - padY, pos.y));
   }
 };
 
@@ -1842,7 +1839,11 @@ const onPointerDown = (e) => {
   const w = viewW(), h = viewH();
   if (pos.x >= -60 && pos.x <= w + 60 && pos.y >= -60 && pos.y <= h + 60) {
     audio.getContext();
-    cur.down = true; cur.x = pos.x; cur.y = pos.y; cur.present = true;
+    const padX = 22, padY = 16;
+    cur.down = true;
+    cur.x = Math.max(padX, Math.min(w - padX, pos.x));
+    cur.y = Math.max(padY, Math.min(h - padY, pos.y));
+    cur.present = true;
   }
 };
 
@@ -1858,6 +1859,13 @@ const onPointerUp = (e) => {
 const onPointerLeave = () => { cur.present = false; setOver(false); };
 const onBlur = () => { cur.present = false; };
 
+const onSoundChange = (e: any) => {
+  if (e && e.detail) {
+    P.sound = e.detail.on ? 1 : 0;
+  }
+};
+document.addEventListener("pf:sound", onSoundChange);
+
 window.addEventListener("pointermove", onPointerMove, { passive: true });
 if ("onpointerrawupdate" in window) {
   window.addEventListener("pointerrawupdate", onPointerRawUpdate, { passive: true });
@@ -1872,6 +1880,9 @@ function press(on, x, y) {
   btn.pressTarget = on ? 1 : 0;
   if (on) {
     audio.playPress();
+    if (typeof window !== "undefined" && (window as any).PFSound) {
+      (window as any).PFSound.play("venom-press");
+    }
   } else {
     audio.playRelease();
     addRipple(x, y, 1.6);
@@ -1879,23 +1890,26 @@ function press(on, x, y) {
   }
 }
 
-const onHitPointerDown = (e) => {
-  const pos = getPointerPos(e);
-  if (insidePill(pos.x, pos.y)) press(true);
+const onHitPointerDown = (e: any) => {
+  press(true, btn.cx, btn.cy);
 };
 hitEl.addEventListener("pointerdown", onHitPointerDown);
 
-const onHitKeyDown = (e) => {
-  if ((e.key === "Enter" || e.key === " ") && !e.repeat) press(true);
+const onHitKeyDown = (e: any) => {
+  if ((e.key === "Enter" || e.key === " ") && !e.repeat) press(true, btn.cx, btn.cy);
 };
 hitEl.addEventListener("keydown", onHitKeyDown);
 
-const onHitKeyUp = (e) => {
+const onHitKeyUp = (e: any) => {
   if (e.key === "Enter" || e.key === " ") press(false, btn.cx, btn.cy);
 };
 hitEl.addEventListener("keyup", onHitKeyUp);
 
-const onHitClick = (e) => {
+const onHitClick = (e: any) => {
+  addRipple(btn.cx, btn.cy, 1.8);
+  if (typeof window !== "undefined" && (window as any).PFSound) {
+    (window as any).PFSound.play("venom-press");
+  }
   if (onActivate) onActivate(e);
   hitEl.dispatchEvent(new CustomEvent("venom:activate", { bubbles: true }));
 };
@@ -1913,6 +1927,7 @@ return {
     }
     document.documentElement.removeEventListener("pointerleave", onPointerLeave);
     window.removeEventListener("blur", onBlur);
+    document.removeEventListener("pf:sound", onSoundChange);
     window.removeEventListener("pointerdown", onPointerDown);
     window.removeEventListener("pointerup", onPointerUp);
     hitEl.removeEventListener("pointerdown", onHitPointerDown);
@@ -1981,11 +1996,9 @@ export default function VenomButton({ label = "let’s collaborate", onActivate,
         position: "relative",
         width: "100%",
         maxWidth: "480px",
-        height: "140px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        height: "195px",
         overflow: "visible",
+        pointerEvents: "none",
         ...style
       }}
     >

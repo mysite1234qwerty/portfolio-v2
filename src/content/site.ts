@@ -58,10 +58,9 @@ export const site = {
 
   contact: {
     headline: "Let's build something remarkable.",
-    email: "aditi.sharma.design@gmail.com",
+    email: "aditi.sharma@nift.ac.in",
     behance: "https://www.behance.net/",
-    linkedin: "https://www.linkedin.com/",
-    github: "https://github.com/",
+    linkedin: "https://www.linkedin.com/in/aditi-sharma-982093304/",
   },
 
   nav: [

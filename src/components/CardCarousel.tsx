@@ -6,7 +6,7 @@ import { sound } from "@/lib/sound";
 import { Project } from "@/content/projects";
 import { ArrowLeft, ArrowRight, Volume2, VolumeX, Eye } from "lucide-react";
 
-export type ShaderEffect = "stretch" | "bulge" | "drum" | "shatter" | "thanos";
+export type ShaderEffect = "stretch" | "drum" | "shatter" | "thanos";
 
 interface CardCarouselProps {
   projects: Project[];
@@ -220,7 +220,6 @@ export function CardCarousel({
 
         const effectMap: Record<ShaderEffect, number> = {
           stretch: 0,
-          bulge: 1,
           drum: 2,
           shatter: 3,
           thanos: 4,
@@ -342,7 +341,6 @@ export function CardCarousel({
         const spacing = 2.6;
         const effectMap: Record<ShaderEffect, number> = {
           stretch: 0,
-          bulge: 1,
           drum: 2,
           shatter: 3,
           thanos: 4,
@@ -453,8 +451,6 @@ export function CardCarousel({
     if (activeEffect === "stretch") {
       const stretchX = 1 + Math.abs(velocity.current) * 0.7;
       extraTransform = ` scaleX(${stretchX}) skewX(${velocity.current * 12}deg)`;
-    } else if (activeEffect === "bulge") {
-      extraTransform = ` scale(${1 + (1 - Math.min(1, absOffset)) * 0.08})`;
     } else if (activeEffect === "drum") {
       extraTransform = ` rotateX(${offset * 8}deg)`;
     } else if (activeEffect === "shatter") {
@@ -641,7 +637,7 @@ export function CardCarousel({
         </div>
 
         <div className="flex items-center gap-1 p-1 rounded-full bg-neutral-950/90 border border-neutral-800/80 backdrop-blur-lg">
-          {(["stretch", "bulge", "drum", "shatter", "thanos"] as ShaderEffect[]).map((eff) => {
+          {(["stretch", "drum", "shatter", "thanos"] as ShaderEffect[]).map((eff) => {
             const isActive = activeEffect === eff;
             return (
               <button

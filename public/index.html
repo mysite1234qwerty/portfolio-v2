@@ -24,17 +24,16 @@
             if (slug) { window.PF_RETURN_TO = slug; document.documentElement.classList.add('returning'); }
         })();
     </script>
-    <script src="vendor/card-carousel.js" defer></script>
-    <script src="vendor/segmented-control.js" defer></script>
-    <script src="js/sound.js" defer></script>
-    <script src="js/home.js" defer></script>
-    <script src="js/chat.js" defer></script>
+    <script src="vendor/card-carousel.js?v=6" defer></script>
+    <script src="vendor/segmented-control.js?v=6" defer></script>
+    <script src="js/sound.js?v=6" defer></script>
+    <script src="js/home.js?v=6" defer></script>
 </head>
 
 <body class="home">
     <header class="site-header">
         <a class="logomark" href="./" aria-label="Aditi Sharma — home">
-            <img src="assets/logomark.svg" alt="" width="24" height="24">
+            <img src="assets/logo.png" alt="Aditi Sharma" width="38" height="38">
             <span class="logomark-name">ADITI SHARMA</span>
         </a>
 
@@ -47,11 +46,11 @@
                 <nav class="links" aria-label="Elsewhere">
                     <a href="https://www.behance.net/aditisharma114" target="_blank" rel="noopener">Behance</a>
                     <span class="dot" aria-hidden="true">•</span>
-                    <a href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+                    <a href="https://www.linkedin.com/in/aditi-sharma-982093304/" target="_blank" rel="noopener">LinkedIn</a>
                     <span class="dot" aria-hidden="true">•</span>
-                    <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+                    <a href="mailto:aditi.sharma@nift.ac.in" class="email-link" data-email="aditi.sharma@nift.ac.in">Email</a>
                     <span class="dot" aria-hidden="true">•</span>
-                    <a href="mailto:aditi.sharma.design@gmail.com" class="email-link" data-email="aditi.sharma.design@gmail.com">Email</a>
+                    <a href="assets/Aditi_Sharma_Resume.pdf" download="Aditi_Sharma_Resume.pdf" class="resume-link" aria-label="Download Aditi Sharma Resume PDF">Resume</a>
                 </nav>
             </div>
         </div>
@@ -64,15 +63,21 @@
             style="position: absolute;"
             effect="stretch"
             bg="#f2f2f2"
-            radius="0"
-            images="assets/projects/web/card-breez.webp, assets/projects/web/card-canteen-2.webp, assets/projects/web/card-what-scene.webp, assets/projects/web/card-plantpal.webp, assets/projects/web/card-celestine.webp, assets/projects/web/card-myjio.webp, assets/projects/web/card-gigverse.webp, assets/projects/web/card-foodmate.webp, assets/projects/web/card-magazine.webp"
-            aria-label="Projects — drag, scroll or use arrow keys; click the centre card to open it"></card-carousel>
+            radius="0.03"
+            startcard="4"
+            hfrac="0.40"
+            wfrac="0.35"
+            wfractall="0.68"
+            gap="0.12"
+            lift="0.02"
+            images="assets/projects/web/card-myjio.webp, assets/projects/web/card-breez.webp, assets/projects/web/card-canteen-2.webp, assets/projects/web/card-foodmate.webp, assets/projects/web/card-what-scene.webp, assets/projects/web/card-gigverse.webp"
+            aria-label="Projects — drag, scroll or use arrow keys; click any card to view on Behance"></card-carousel>
 
         <div class="effect-switch">
             <segmented-control
                 id="effect-control"
                 appearance="light"
-                options="Stretch, Bulge, Drum, Shatter, Dust"
+                options="Stretch, Drum, Shatter, Dust"
                 selected="Stretch"
                 size="36"
                 pad="4.5"
@@ -83,43 +88,5 @@
                 ink-2="#82849A"></segmented-control>
         </div>
     </main>
-
-    <!-- Case Study Drawer -->
-    <div id="drawer-backdrop" class="drawer-backdrop" aria-hidden="true"></div>
-    <aside id="project-drawer" class="project-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
-        <div class="drawer-header">
-            <span id="drawer-category" class="drawer-tag">Product & Service Design</span>
-            <button id="drawer-close" class="drawer-close" aria-label="Close Case Study">×</button>
-        </div>
-
-        <div>
-            <h2 id="drawer-title" class="drawer-title">Canteen 2.0</h2>
-            <p id="drawer-subtitle" class="drawer-subtitle">Campus Dining & Pickup Ecosystem</p>
-            <p id="drawer-role" class="drawer-meta" style="margin-top: 8px;"></p>
-        </div>
-
-        <div id="drawer-metrics" class="drawer-metrics"></div>
-
-        <div class="drawer-section">
-            <h3>Problem Statement</h3>
-            <p id="drawer-challenge"></p>
-        </div>
-
-        <div class="drawer-section">
-            <h3>Strategic Approach</h3>
-            <p id="drawer-approach"></p>
-        </div>
-
-        <div class="drawer-section">
-            <h3>Process & Milestones</h3>
-            <div id="drawer-steps" class="drawer-steps"></div>
-        </div>
-
-        <div style="padding-top: 16px;">
-            <a id="drawer-behance" href="#" target="_blank" rel="noopener noreferrer" class="drawer-behance-btn">
-                View Full Behance Case Study →
-            </a>
-        </div>
-    </aside>
 </body>
 </html>

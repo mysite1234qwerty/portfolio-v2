@@ -5,6 +5,8 @@
  */
 (function () {
     'use strict';
+    // Design idea assistant disabled per user request
+    return;
 
     // State
     var isOpen = false;
@@ -148,7 +150,7 @@
             chip.addEventListener('click', function () {
                 var prompt = chip.getAttribute('data-prompt');
                 if (prompt && !isThinking) {
-                    if (window.PFSound) window.PFSound.play('tab-select');
+                    if (window.PFSound) window.PFSound.play('select');
                     sendMessage(prompt);
                 }
             });
@@ -167,7 +169,7 @@
             popover.setAttribute('aria-hidden', 'false');
             if (backdrop) backdrop.classList.add('is-open');
             btn.classList.add('is-active');
-            if (window.PFSound) window.PFSound.play('select');
+            if (window.PFSound) window.PFSound.play('chat-open');
             setTimeout(function () {
                 var input = document.getElementById('ai-chat-input');
                 if (input) input.focus();
@@ -177,7 +179,7 @@
             popover.setAttribute('aria-hidden', 'true');
             if (backdrop) backdrop.classList.remove('is-open');
             btn.classList.remove('is-active');
-            if (window.PFSound) window.PFSound.play('photo-close');
+            if (window.PFSound) window.PFSound.play('chat-close');
         }
     }
 
@@ -217,7 +219,7 @@
         messages.push({ role: 'user', content: userText });
         isThinking = true;
         renderMessages();
-        if (window.PFSound) window.PFSound.play('tab-select');
+        if (window.PFSound) window.PFSound.play('chat-send');
 
         try {
             var res = await fetch('/api/chat', {
@@ -233,7 +235,7 @@
             var data = await res.json();
             var reply = data.reply || data.error || 'I had trouble generating ideas. Please try again.';
             messages.push({ role: 'assistant', content: reply });
-            if (window.PFSound) window.PFSound.play('snap');
+            if (window.PFSound) window.PFSound.play('chat-receive');
         } catch {
             messages.push({
                 role: 'assistant',

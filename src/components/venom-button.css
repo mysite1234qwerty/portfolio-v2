@@ -2,9 +2,10 @@
   position: relative;
   width: 100%;
   max-width: 480px;
-  height: 140px;
+  height: 195px;
   margin: 0;
   user-select: none;
+  pointer-events: none;
 }
 
 .venom-container.is-over-goo,
@@ -34,6 +35,7 @@
   touch-action: none;
   cursor: pointer;
   z-index: 10;
+  pointer-events: auto;
 }
 
 .venom-hit:focus {
@@ -43,4 +45,13 @@
 .venom-hit:focus-visible {
   outline: 1.5px solid #ffffff;
   outline-offset: 14px;
+}
+
+body.no-gl .venom-hit {
+  color: #ffedd7;
+  background: radial-gradient(120% 140% at 30% 20%, oklch(0.32 0.02 275), oklch(0.12 0.01 270) 60%);
+  box-shadow: 0 18px 30px -16px oklch(0.2 0.02 270 / 0.6), inset 0 1px 0 oklch(1 0 0 / 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

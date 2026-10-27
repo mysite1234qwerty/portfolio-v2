@@ -87,7 +87,7 @@ export default function Home() {
           wfractall="0.68"
           gap="0.12"
           lift="0.02"
-          images="assets/projects/web/card-myjio.webp, assets/projects/web/card-breez.webp, assets/projects/web/card-canteen-2.webp, assets/projects/web/card-foodmate.webp, assets/projects/web/card-what-scene.webp, assets/projects/web/card-gigverse.webp"
+          images="/assets/projects/web/card-myjio.webp, /assets/projects/web/card-breez.webp, /assets/projects/web/card-canteen-2.webp, /assets/projects/web/card-foodmate.webp, /assets/projects/web/card-what-scene.webp, /assets/projects/web/card-gigverse.webp"
           aria-label="Projects — drag, scroll or use arrow keys; click any card to view on Behance"
         />
 

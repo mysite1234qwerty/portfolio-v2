@@ -402,6 +402,16 @@ body.home {
 .home .what-i-do > p { --intro-delay: 0.38s; }
 .home .links         { --intro-delay: 0.50s; }
 
+@keyframes carousel-fallback {
+    0%, 75% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.home #work-carousel {
+    opacity: 0;
+    animation: carousel-fallback 1.2s ease forwards;
+}
+
 /* Opacity-only fade (a blur filter on the full-window WebGL canvas would cost frames);
    the carousel's own fly-in (js/home.js) is the main event */
 .home.is-ready #work-carousel {

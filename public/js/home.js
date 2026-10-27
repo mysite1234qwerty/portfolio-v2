@@ -16,7 +16,7 @@
             slug: 'myjio',
             title: 'MyJio App Redesign',
             subtitle: 'Telecom & Multi-Service Super App Architecture',
-            image: 'assets/projects/web/card-myjio.webp',
+            image: '/assets/projects/web/card-myjio.webp',
             behanceUrl: 'https://www.behance.net/gallery/246794973/MyJio-App-Redesign',
             role: 'Product Designer & Systems Architect',
             category: 'Super App & Design System',
@@ -34,7 +34,7 @@
             slug: 'breez',
             title: 'Breez Mobility',
             subtitle: 'Premium Electric Chauffeur Platform',
-            image: 'assets/projects/web/card-breez.webp',
+            image: '/assets/projects/web/card-breez.webp',
             behanceUrl: 'https://www.behance.net/gallery/256963973/Breez-Premium-Mobility',
             role: 'Product & Interaction Designer',
             category: 'Mobility & Responsive Web',
@@ -52,7 +52,7 @@
             slug: 'canteen-2',
             title: 'Canteen 2.0',
             subtitle: 'Campus Dining & Pickup Ecosystem',
-            image: 'assets/projects/web/card-canteen-2.webp',
+            image: '/assets/projects/web/card-canteen-2.webp',
             behanceUrl: 'https://www.behance.net/gallery/256956757/Canteen-20',
             role: 'Lead Product Designer & UX Researcher',
             category: 'Product & Service Design',
@@ -70,7 +70,7 @@
             slug: 'foodmate',
             title: 'Foodmate',
             subtitle: 'Smart Meal Planning & Pantry Expiry Tracker',
-            image: 'assets/projects/web/card-foodmate.webp',
+            image: '/assets/projects/web/card-foodmate.webp',
             behanceUrl: 'https://www.behance.net/gallery/246237433/Foodmate',
             role: 'UX Researcher & Interaction Designer',
             category: 'Consumer Mobile & Sustainability',
@@ -88,7 +88,7 @@
             slug: 'what-scene',
             title: 'What Scene?',
             subtitle: 'Social Event & Group Decision App',
-            image: 'assets/projects/web/card-what-scene.webp',
+            image: '/assets/projects/web/card-what-scene.webp',
             behanceUrl: 'https://www.behance.net/gallery/249215845/What-Scene',
             role: 'Product Designer & UX Researcher',
             category: 'Social Discovery & Mobile UX',
@@ -106,7 +106,7 @@
             slug: 'gigverse',
             title: 'Gigverse',
             subtitle: 'Decentralized Creator Economy Marketplace',
-            image: 'assets/projects/web/card-gigverse.webp',
+            image: '/assets/projects/web/card-gigverse.webp',
             behanceUrl: 'https://www.behance.net/gallery/246768791/Gigverse',
             role: 'Product Architect & UX Designer',
             category: 'Marketplace & Fintech UX',
@@ -135,7 +135,13 @@
     var control = document.getElementById('effect-control');
 
     if (carousel) {
-        carousel.images = PROJECTS.map(function (p) { return p.image; });
+        var projectUrls = PROJECTS.map(function (p) { return p.image; });
+        carousel.images = projectUrls;
+        if (typeof carousel.set !== 'function' && window.customElements && typeof window.customElements.whenDefined === 'function') {
+            customElements.whenDefined('card-carousel').then(function () {
+                carousel.images = projectUrls;
+            });
+        }
 
         var current = 0;
         function getCurrentIndex() {
@@ -381,7 +387,11 @@
         var startCard = returning ? returnTo
             : reduceMotion ? REST_CARD
             : ((REST_CARD - INTRO_CARDS) % n + n) % n;
-        carousel.set({ startCard: startCard });
+        if (typeof carousel.set === 'function') {
+            carousel.set({ startCard: startCard });
+        } else {
+            carousel.setAttribute('startcard', String(startCard));
+        }
     }
 
     function smoothstep(t) { t = Math.max(0, Math.min(1, t)); return t * t * (3 - 2 * t); }
@@ -392,13 +402,13 @@
         var from = c.index;
         var x = 0, v = 0;
         var start = null, last = 0, raf = 0, stopped = false;
-        carousel.set({ stiffness: 30 });
+        if (typeof carousel.set === 'function') carousel.set({ stiffness: 30 });
 
         function stop() {
             if (stopped) return;
             stopped = true;
             cancelAnimationFrame(raf);
-            carousel.set({ stiffness: 9 });
+            if (typeof carousel.set === 'function') carousel.set({ stiffness: 9 });
         }
         ['pointerdown', 'wheel', 'keydown'].forEach(function (ev) {
             carousel.addEventListener(ev, stop, { once: true, passive: true });
@@ -428,12 +438,30 @@
     }
 
     var introStart = performance.now();
+    var flyInScheduled = false;
+    function scheduleFlyIn(waitMs) {
+        if (flyInScheduled || reduceMotion || returning || !carousel) return;
+        if (carousel._c) {
+            flyInScheduled = true;
+            setTimeout(flyIn, waitMs);
+        } else if (carousel.addEventListener) {
+            carousel.addEventListener('ready', function () {
+                if (!flyInScheduled) {
+                    flyInScheduled = true;
+                    setTimeout(flyIn, waitMs);
+                }
+            }, { once: true });
+        }
+    }
     function introReady() {
-        if (document.body.classList.contains('is-ready')) return;
-        var waitMs = returning ? 0 : Math.max(0, 650 - (performance.now() - introStart));
-        document.body.style.setProperty('--carousel-delay', (waitMs / 1000).toFixed(2) + 's');
-        document.body.classList.add('is-ready');
-        if (carousel && !reduceMotion && !returning && carousel._c) setTimeout(flyIn, waitMs);
+        if (!document.body.classList.contains('is-ready')) {
+            var waitMs = returning ? 0 : Math.max(0, 650 - (performance.now() - introStart));
+            document.body.style.setProperty('--carousel-delay', (waitMs / 1000).toFixed(2) + 's');
+            document.body.classList.add('is-ready');
+            scheduleFlyIn(waitMs);
+        } else {
+            scheduleFlyIn(0);
+        }
     }
     if (carousel) {
         if (carousel._c && carousel._c.ready) introReady();

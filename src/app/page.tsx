@@ -78,7 +78,7 @@ export default function Home() {
         <card-carousel
           id="work-carousel"
           style={{ position: "absolute" }}
-          effect="stretch"
+          effect="drum"
           bg="#f2f2f2"
           radius="0.03"
           startcard="4"
@@ -96,33 +96,21 @@ export default function Home() {
           <VenomButton 
             label="SAY HI."
             onActivate={() => {
+              const carousel = document.getElementById("work-carousel") as any;
+              if (carousel && typeof carousel.set === "function") {
+                carousel.set({ effect: "drum" });
+              }
+              if (typeof window !== "undefined" && (window as any).PFSound) {
+                (window as any).PFSound.play("effect-drum");
+              }
               window.location.href = "mailto:aditi.sharma@nift.ac.in?subject=Collaboration%20Inquiry";
             }}
-          />
-        </div>
-
-        {/* Bottom Right: Effect-Selection Controls */}
-        <div className="effect-switch">
-          {/* @ts-expect-error Custom Web Component */}
-          <segmented-control
-            id="effect-control"
-            appearance="light"
-            options="Stretch, Drum, Shatter, Dust"
-            selected="Stretch"
-            size="36"
-            pad="4.5"
-            roundness="1"
-            surface="#FFFFFF"
-            indicator="#282B32"
-            ink="#FFFFFF"
-            ink-2="#82849A"
           />
         </div>
       </main>
 
       {/* Scripts */}
       <Script src="/vendor/card-carousel.js?v=6" strategy="afterInteractive" />
-      <Script src="/vendor/segmented-control.js?v=6" strategy="afterInteractive" />
       <Script src="/js/sound.js?v=6" strategy="afterInteractive" />
       <Script src="/js/home.js?v=6" strategy="afterInteractive" />
     </>

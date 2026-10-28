@@ -25,7 +25,6 @@
         })();
     </script>
     <script src="/vendor/card-carousel.js?v=6" defer></script>
-    <script src="/vendor/segmented-control.js?v=6" defer></script>
     <script src="/js/sound.js?v=6" defer></script>
     <script src="/js/home.js?v=6" defer></script>
 </head>
@@ -61,7 +60,7 @@
         <card-carousel
             id="work-carousel"
             style="position: absolute;"
-            effect="stretch"
+            effect="drum"
             bg="#f2f2f2"
             radius="0.03"
             startcard="4"
@@ -72,21 +71,6 @@
             lift="0.02"
             images="/assets/projects/web/card-myjio.webp, /assets/projects/web/card-breez.webp, /assets/projects/web/card-canteen-2.webp, /assets/projects/web/card-foodmate.webp, /assets/projects/web/card-what-scene.webp, /assets/projects/web/card-gigverse.webp"
             aria-label="Projects — drag, scroll or use arrow keys; click any card to view on Behance"></card-carousel>
-
-        <div class="effect-switch">
-            <segmented-control
-                id="effect-control"
-                appearance="light"
-                options="Stretch, Drum, Shatter, Dust"
-                selected="Stretch"
-                size="36"
-                pad="4.5"
-                roundness="1"
-                surface="#FFFFFF"
-                indicator="#282B32"
-                ink="#FFFFFF"
-                ink-2="#82849A"></segmented-control>
-        </div>
     </main>
 </body>
 </html>

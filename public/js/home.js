@@ -124,17 +124,12 @@
 
     window.ADITI_PROJECTS = PROJECTS;
 
-    var EFFECTS = {
-        stretch: 'stretch',
-        drum: 'drum',
-        shatter: 'shatter',
-        dust: 'thanos'
-    };
-
     var carousel = document.getElementById('work-carousel');
-    var control = document.getElementById('effect-control');
 
     if (carousel) {
+        if (typeof carousel.set === 'function') {
+            carousel.set({ effect: 'drum' });
+        }
         var projectUrls = PROJECTS.map(function (p) { return p.image; });
         carousel.images = projectUrls;
         if (typeof carousel.set !== 'function' && window.customElements && typeof window.customElements.whenDefined === 'function') {
@@ -469,19 +464,15 @@
     }
     setTimeout(introReady, 800);
 
-    // Effect Switch
-    if (carousel && control) {
-        control.addEventListener('change', function (e) {
-            var label = String((e.detail && e.detail.value) || '').trim().toLowerCase();
-            var effect = EFFECTS[label];
-            if (effect && typeof carousel.set === 'function') {
-                carousel.set({ effect: effect });
-            }
-            if (window.PFSound) {
-                window.PFSound.play('effect-' + label);
-            }
-        });
-    }
+    // Drum Effect Trigger on Venom Button Interaction
+    document.addEventListener('venom:activate', function () {
+        if (carousel && typeof carousel.set === 'function') {
+            carousel.set({ effect: 'drum' });
+        }
+        if (window.PFSound) {
+            window.PFSound.play('effect-drum');
+        }
+    });
 
     // Letter Roll Hover Animation
     function letterRoll(el, text) {

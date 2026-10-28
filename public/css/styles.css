@@ -355,16 +355,7 @@ body.home {
     }
 }
 
-/* ===== EFFECT SWITCH (BOTTOM RIGHT) ===== */
-.effect-switch {
-    position: fixed;
-    right: 44px;
-    left: auto;
-    bottom: var(--switch-bottom, 40px);
-    transform: none;
-    z-index: 6;
-    border-radius: 1000px;
-}
+
 
 
 /* ===== INTRO (home) =====
@@ -385,8 +376,7 @@ body.home {
 .home .who-i-am,
 .home .what-i-do > p,
 .home .links,
-.home #work-carousel,
-.home #effect-control {
+.home #work-carousel {
     opacity: 0;
 }
 
@@ -423,19 +413,14 @@ body.home {
     to   { opacity: 1; }
 }
 
-/* Tabs arrive together with the carousel */
-.home.is-ready #effect-control {
-    display: inline-block;
-    animation: blur-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--carousel-delay, 0s) forwards;
-}
+
 
 /* Back from a project: no intro — everything is simply there (the carousel, which has to
    boot, gets a quick fade so it doesn't pop) */
 .returning .home .logomark,
 .returning .home .who-i-am,
 .returning .home .what-i-do > p,
-.returning .home .links,
-.returning .home #effect-control {
+.returning .home .links {
     opacity: 1;
     animation: none;
 }
@@ -449,8 +434,7 @@ body.home {
     .home .who-i-am,
     .home .what-i-do > p,
     .home .links,
-    .home.is-ready #work-carousel,
-    .home.is-ready #effect-control {
+    .home.is-ready #work-carousel {
         animation-name: fade-in;
         animation-duration: 0.4s;
     }
@@ -567,15 +551,6 @@ body.home {
         max-width: calc(100vw - 16px);
         height: 175px;
     }
-
-    .effect-switch {
-        left: 50%;
-        right: auto;
-        transform: translateX(-50%) scale(0.78);
-        transform-origin: 50% 100%;
-        bottom: calc(max(14px, env(safe-area-inset-bottom, 14px)) + 66px);
-        z-index: 7;
-    }
 }
 
 @media (max-width: 380px) {
@@ -600,14 +575,6 @@ body.home {
         width: 340px;
         max-width: 100vw;
         height: 110px;
-    }
-
-    .effect-switch {
-        right: 12px;
-        left: auto;
-        bottom: calc(max(10px, env(safe-area-inset-bottom, 10px)) + 66px);
-        transform: scale(0.68);
-        transform-origin: 100% 100%;
     }
 }
 

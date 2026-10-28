@@ -13,6 +13,56 @@ export default function Home() {
     };
   }, []);
 
+  const handleSayHi = () => {
+    const carousel = document.getElementById("work-carousel") as any;
+    if (carousel && typeof carousel.set === "function") {
+      carousel.set({ effect: "drum" });
+    }
+    if (typeof window !== "undefined" && (window as any).PFSound) {
+      (window as any).PFSound.play("effect-drum");
+    }
+
+    const email = "aditi.sharma@nift.ac.in";
+    const subject = "Collaboration Inquiry";
+    const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}`;
+
+    let nativeAppOpened = false;
+    const handleBlur = () => {
+      nativeAppOpened = true;
+      cleanup();
+    };
+
+    const cleanup = () => {
+      window.removeEventListener("blur", handleBlur);
+      document.removeEventListener("visibilitychange", handleBlur);
+    };
+
+    window.addEventListener("blur", handleBlur);
+    document.addEventListener("visibilitychange", handleBlur);
+
+    // 1. Primary default action: mailto link for users with configured email clients
+    const a = document.createElement("a");
+    a.href = mailtoUrl;
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    // 2. Fallback: If no desktop mail client opens (window remains focused and active),
+    // open Gmail web-composer in a new tab without duplicate windows
+    setTimeout(() => {
+      cleanup();
+      if (!nativeAppOpened && document.hasFocus()) {
+        try {
+          window.open(gmailUrl, "_blank", "noopener,noreferrer");
+        } catch {
+          window.location.href = gmailUrl;
+        }
+      }
+    }, 1000);
+  };
+
   return (
     <>
       <link rel="stylesheet" href="/css/styles.css" />
@@ -33,10 +83,7 @@ export default function Home() {
             <p>
               Studying Product & UX Design at{" "}
               <span className="nowrap">
-                <a className="accent" href="https://nift.ac.in/bengaluru/" target="_blank" rel="noopener noreferrer">
-                  NIFT Bengaluru
-                </a>
-                .
+                <span className="accent">NIFT Bengaluru</span>.
               </span>{" "}
               Bridging deep UX research, information architecture, and front-end engineering.
             </p>
@@ -46,7 +93,12 @@ export default function Home() {
                 Behance
               </a>
               <span className="dot" aria-hidden="true">•</span>
-              <a href="https://www.linkedin.com/in/aditi-sharma-982093304/" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://www.linkedin.com/in/aditi-sharma-982093304/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="linkedin-link"
+              >
                 LinkedIn
               </a>
               <span className="dot" aria-hidden="true">•</span>
@@ -95,16 +147,7 @@ export default function Home() {
         <div className="venom-dock">
           <VenomButton 
             label="SAY HI."
-            onActivate={() => {
-              const carousel = document.getElementById("work-carousel") as any;
-              if (carousel && typeof carousel.set === "function") {
-                carousel.set({ effect: "drum" });
-              }
-              if (typeof window !== "undefined" && (window as any).PFSound) {
-                (window as any).PFSound.play("effect-drum");
-              }
-              window.location.href = "mailto:aditi.sharma@nift.ac.in?subject=Collaboration%20Inquiry";
-            }}
+            onActivate={handleSayHi}
           />
         </div>
       </main>

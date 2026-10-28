@@ -234,6 +234,7 @@ body.home {
 
 .accent {
     color: var(--accent);
+    cursor: default;
 }
 
 .links {
@@ -245,6 +246,15 @@ body.home {
 
 .links a {
     color: var(--ink-muted);
+}
+
+.links .linkedin-link,
+.links a[href*="linkedin"],
+.links .email-link,
+.links .resume-link {
+    background: #E5E5EB;
+    padding: 2px 7px;
+    border-radius: 4px;
 }
 
 .links .dot {

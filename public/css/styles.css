@@ -44,6 +44,7 @@
     --bg: #F2F2F2;
     --ink: #282B32;
     --ink-muted: #82849A;
+    --ink-link: #484B5F;
     --ink-faint: #D7D8E4;
     --accent: #EC4F10;
 
@@ -244,17 +245,12 @@ body.home {
     white-space: nowrap;
 }
 
-.links a {
-    color: var(--ink-muted);
-}
-
-.links .linkedin-link,
-.links a[href*="linkedin"],
-.links .email-link,
-.links .resume-link {
-    background: #E5E5EB;
-    padding: 2px 7px;
-    border-radius: 4px;
+.links a,
+.links a:hover,
+.links a:focus-visible,
+.links a .roll-a,
+.links a .roll-b {
+    color: var(--ink-link, #484B5F);
 }
 
 .links .dot {

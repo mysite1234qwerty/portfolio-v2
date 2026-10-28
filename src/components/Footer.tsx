@@ -32,7 +32,7 @@ export function Footer() {
         {/* Venom-themed interactive collaboration button */}
         <div className="pt-2">
           <VenomButton 
-            label="let’s collaborate"
+            label="SAY HI."
             onActivate={() => {
               window.location.href = `mailto:${site.contact.email}?subject=Collaboration%20Inquiry`;
             }}

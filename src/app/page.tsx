@@ -94,7 +94,7 @@ export default function Home() {
         {/* Bottom Centre: Glossy Black Venom Collaboration Button */}
         <div className="venom-dock">
           <VenomButton 
-            label="let’s collaborate"
+            label="SAY HI."
             onActivate={() => {
               window.location.href = "mailto:aditi.sharma@nift.ac.in?subject=Collaboration%20Inquiry";
             }}

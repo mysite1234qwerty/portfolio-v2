@@ -12,7 +12,7 @@ export interface VenomButtonProps {
   style?: React.CSSProperties;
 }
 
-export function initVenomButton({ canvas, hitEl, container, label = "let’s collaborate", onActivate }: any) {
+export function initVenomButton({ canvas, hitEl, container, label = "SAY HI.", onActivate }: any) {
 const NP = 14;            // points per tendril
 const MAXB = 5;           // blobs (cursor droplet + crawlers)
 const MAXR = 6;           // surface ripples
@@ -68,7 +68,7 @@ async function ensureFont() {
   }
 }
 const fontReady = ensureFont();
-const LABEL_TEXT = 'let’s collaborate';
+const LABEL_TEXT = 'SAY HI.';
 const LABEL_NUDGE = 1;  // px the label sits below centre
 const LABEL_PX = 120;   // glyph size drawn into the label canvas
 const LABEL_CSS = 18;   // on-screen label size, CSS px
@@ -1003,7 +1003,7 @@ async function setLabelText(text) {
   hitEl.setAttribute('aria-label', text); hitEl.textContent = text;
   layoutButton();
 }
-setLabelText(LABEL_TEXT);
+setLabelText(label || LABEL_TEXT);
 
 // ───────────────────────────── geometry helpers ─────────────────────────────
 function geo() {
@@ -1963,7 +1963,7 @@ return {
 
 }
 
-export default function VenomButton({ label = "let’s collaborate", onActivate, className = "", style = {} }: VenomButtonProps) {
+export default function VenomButton({ label = "SAY HI.", onActivate, className = "", style = {} }: VenomButtonProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const hitRef = useRef<HTMLButtonElement>(null);
